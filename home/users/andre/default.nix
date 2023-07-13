@@ -20,6 +20,12 @@
     homeDirectory = "/home/andre";
   };
 
+  # git
+  programs.git = {
+    enable = true;
+    userName = "andre";
+    userEmail = "andre7391@gmail.com";
+  };
 
   # Nicely reload system units when changing configs
   #systemd.user.startServices = "sd-switch";
