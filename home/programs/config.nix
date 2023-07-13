@@ -18,6 +18,7 @@
     qbittorrent
     xfce.thunar
     glib
+    udiskie
   ];
 
 }

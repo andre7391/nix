@@ -1,51 +1,39 @@
 { config, lib, pkgs, ... }: {
 
   imports = [
-    ../../hosts/zeus/hardware.nix
-    ../../hosts/users/andre/config.nix
-    ../../hosts/fonts/config.nix
-    ../../hosts/programs/config.nix
-    ../../hosts/programs/plex/config.nix
+
+    ./hardware.nix
+
+    ../../hosts/users/andre
+    ../../hosts/shared
   ];
 
   # bootloader
   boot.loader.grub = {
     enable = true;
     device = "nodev";
-    useOSProber = true;
+    # useOSProber = true; to generate windows boot entry
     efiInstallAsRemovable = true;
     efiSupport = true;
-  };
-
-  # gretter
-  services.xserver = {
-    enable = true;
-
-    displayManager = {
-      gdm = {
-        enable = true;
-        wayland = true;
-      };
-    };
-  };
-
-  # window manager
-  programs.hyprland = {
-    enable = true;
-    xwayland = {
-      enable = true;
-      hidpi = true;
-    };
+    extraEntries = ''
+      menuentry 'Windows - Default' --class windows --class os {
+      	insmod part_gpt
+      	insmod fat
+      	search --no-floppy --fs-uuid --set=root 944B-F384
+      	chainloader /efi/Microsoft/Boot/bootmgfw.efi
+      }
+    '';
   };
 
   # filesystems
   boot.supportedFilesystems = [ "ntfs" ];
 
   # network
-  networking.hostName = "zeus"; # Define your hostname.
+  networking.hostName = "zeus";
   networking.networkmanager.enable = true;
 
   # locale
+  time.hardwareClockInLocalTime = true;
   time.timeZone = "America/Campo_Grande";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
@@ -63,9 +51,8 @@
   # keyboard
   services.xserver = {
     layout = "us";
-    xkbVariant = "intl";
+    xkbVariant = "altgr-intl";
   };
-  console.keyMap = "us-acentos";
 
   # printer
   services.printing.enable = true;

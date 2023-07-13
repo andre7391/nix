@@ -8,6 +8,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # impermanence
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -19,7 +24,7 @@
       # hosts configurations
       nixosConfigurations = {
         zeus = lib.nixosSystem {
-          modules = [ ./hosts/zeus/config.nix ];
+          modules = [ ./hosts/zeus ];
           specialArgs = { inherit inputs outputs; };
         };
       };

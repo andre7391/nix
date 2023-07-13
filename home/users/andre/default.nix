@@ -13,8 +13,6 @@
     home-manager.enable = true;
   };
 
-  services.udiskie.enable = true;
-
 
   # user and home
   home = {

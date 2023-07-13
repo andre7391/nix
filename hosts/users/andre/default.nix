@@ -6,7 +6,7 @@
 
   # home-manager
   home-manager.extraSpecialArgs = { inherit inputs outputs; };
-  home-manager.users.andre = import ../../../home/users/andre/config.nix;
+  home-manager.users.andre = import ../../../home/users/andre;
 
   # system user
   users.users.andre = {
