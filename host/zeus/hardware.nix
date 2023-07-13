@@ -26,12 +26,6 @@
     options = [ "subvol=nix" ];
   };
 
-  fileSystems."/persist" = {
-    device = "/dev/disk/by-uuid/73f6a629-919c-4f34-983e-146158ffa162";
-    fsType = "btrfs";
-    options = [ "subvol=persist" ];
-  };
-
   fileSystems."/work" = {
     device = "/dev/disk/by-uuid/73f6a629-919c-4f34-983e-146158ffa162";
     fsType = "btrfs";

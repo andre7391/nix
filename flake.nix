@@ -24,7 +24,7 @@
       # hosts configurations
       nixosConfigurations = {
         zeus = lib.nixosSystem {
-          modules = [ ./hosts/zeus ];
+          modules = [ ./host/zeus ];
           specialArgs = { inherit inputs outputs; };
         };
       };

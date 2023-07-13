@@ -2,7 +2,7 @@
   imports = [
     #   inputs.hyprland.homeManagerModules.default
 
-    ../../../home/programs/config.nix
+    ../../../home/shared
     ../../../home/programs/hyprland/config.nix
     ../../../home/theme/config.nix
 

@@ -1,10 +1,5 @@
 { pkgs, inputs, ... }: {
 
-  imports = [
-    inputs.impermanence.nixosModules.impermanence
-
-  ];
-
   # plex
   services.plex = {
     enable = true;

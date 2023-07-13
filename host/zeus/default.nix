@@ -4,8 +4,8 @@
 
     ./hardware.nix
 
-    ../../hosts/users/andre
-    ../../hosts/shared
+    ../../host/users/andre
+    ../../host/shared
   ];
 
   # bootloader
@@ -30,7 +30,6 @@
 
   # network
   networking.hostName = "zeus";
-  networking.networkmanager.enable = true;
 
   # locale
   time.hardwareClockInLocalTime = true;

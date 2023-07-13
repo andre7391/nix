@@ -1,5 +1,9 @@
 { pkgs, ... }: {
 
+  imports = [
+    ../../home/shared/google-chrome
+  ];
+
   # nix configs
   nixpkgs.config = {
     allowUnfree = true;

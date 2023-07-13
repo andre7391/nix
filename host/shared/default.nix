@@ -1,7 +1,8 @@
 { pkgs, ... }: {
 
   imports = [
-    ../../hosts/shared/plex
+    ../../host/shared/plex
+    ../../host/shared/network-manager
   ];
 
   # nix configs
