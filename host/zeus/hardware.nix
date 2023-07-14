@@ -4,10 +4,9 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [
-      (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
@@ -15,21 +14,21 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/73f6a629-919c-4f34-983e-146158ffa162";
+    device = "/dev/disk/by-uuid/6316f653-c019-49bc-aef3-017e6fcbd045";
     fsType = "btrfs";
-    options = [ "subvol=root" ];
+    options = [ "subvol=root" "compress=zstd" "noatime" ];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/73f6a629-919c-4f34-983e-146158ffa162";
+    device = "/dev/disk/by-uuid/6316f653-c019-49bc-aef3-017e6fcbd045";
     fsType = "btrfs";
-    options = [ "subvol=nix" ];
+    options = [ "subvol=nix" "compress=zstd" "noatime" ];
   };
 
   fileSystems."/work" = {
-    device = "/dev/disk/by-uuid/73f6a629-919c-4f34-983e-146158ffa162";
+    device = "/dev/disk/by-uuid/6316f653-c019-49bc-aef3-017e6fcbd045";
     fsType = "btrfs";
-    options = [ "subvol=work" ];
+    options = [ "subvol=work" "compress=zstd" "noatime" ];
     neededForBoot = true;
   };
 

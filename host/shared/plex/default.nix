@@ -7,9 +7,6 @@
     dataDir = "/work/host/plex";
   };
 
-  # impermanence
-  #environment.persistence."/work/host".directories = [
-  #  "/var/lib/plex"
-  #];
+
 
 }

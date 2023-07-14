@@ -1,7 +1,7 @@
 { pkgs, ... }: {
 
   imports = [
-    ../../home/shared/google-chrome
+    #    ../../home/shared/google-chrome
   ];
 
   # nix configs
@@ -23,6 +23,7 @@
     xfce.thunar
     glib
     udiskie
+    google-chrome
   ];
 
 }

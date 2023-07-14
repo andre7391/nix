@@ -2,7 +2,7 @@
 
   imports = [
     ../../host/shared/plex
-    ../../host/shared/network-manager
+    ../../host/shared/users/andre
   ];
 
   # nix configs

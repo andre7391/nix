@@ -4,9 +4,11 @@
 
     ./hardware.nix
 
-    ../../host/users/andre
     ../../host/shared
   ];
+
+  # users config
+  users.mutableUsers = false;
 
   # bootloader
   boot.loader.grub = {
@@ -30,6 +32,7 @@
 
   # network
   networking.hostName = "zeus";
+  networking.networkmanager.enable = true;
 
   # locale
   time.hardwareClockInLocalTime = true;

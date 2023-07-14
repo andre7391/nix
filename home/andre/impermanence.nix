@@ -4,19 +4,15 @@
     inputs.impermanence.nixosModules.home-manager.impermanence
   ];
 
-
-  # chrome
-  home.packages = with pkgs;  [
-    google-chrome
-  ];
-
-
+  # impermanence
   home.persistence."/work/andre" = {
     directories = [
       ".config/google-chrome"
     ];
-    allowOther = true;
-
+    allowOther = false;
   };
-}
 
+  # mkdir -p /work/andre/.config
+  # cp -r /home/andre/.config/google-chrome /work/andre/.config/google-chrome
+
+}
