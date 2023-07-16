@@ -7,12 +7,23 @@
   # impermanence
   home.persistence."/work/andre" = {
     directories = [
+
+      # google-chrome
       ".config/google-chrome"
+
+      # vscode
+      ".config/Code"
+      ".vscode"
+    ];
+    files = [
+
+      # bash history
+      ".bash_history"
+
     ];
     allowOther = false;
   };
 
   # mkdir -p /work/andre/.config
-  # cp -r /home/andre/.config/google-chrome /work/andre/.config/google-chrome
-
+  # cp -r /home/andre/.vscode /work/andre/.vscode
 }

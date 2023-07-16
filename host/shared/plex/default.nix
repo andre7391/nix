@@ -6,7 +6,4 @@
     openFirewall = true;
     dataDir = "/work/host/plex";
   };
-
-
-
 }

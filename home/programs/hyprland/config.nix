@@ -4,7 +4,7 @@
 
   # hyprland
   home.file = {
-    ".config/hypr/hyprland.conf".source = config.lib.file.mkOutOfStoreSymlink /work/nix/home/programs/hyprland/hyprland.conf;
+    ".config/hypr/hyprland.conf".source = config.lib.file.mkOutOfStoreSymlink /work/andre/dotfiles/home/programs/hyprland/hyprland.conf;
   };
   wayland.windowManager.sway = {
     enable = true;

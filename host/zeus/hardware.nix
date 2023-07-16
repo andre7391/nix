@@ -13,6 +13,12 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+ # fileSystems."/" = {
+ #   device = "none";
+ #   fsType = "tmpfs";
+ #   options = [ "defaults" "size=2G" "mode=755" ];
+ # };
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/6316f653-c019-49bc-aef3-017e6fcbd045";
     fsType = "btrfs";
@@ -25,12 +31,20 @@
     options = [ "subvol=nix" "compress=zstd" "noatime" ];
   };
 
+  fileSystems."/var/log" = {
+    device = "/dev/disk/by-uuid/6316f653-c019-49bc-aef3-017e6fcbd045";
+    fsType = "btrfs";
+    options = [ "subvol=log" "compress=zstd" "noatime" ];
+  };
+
   fileSystems."/work" = {
     device = "/dev/disk/by-uuid/6316f653-c019-49bc-aef3-017e6fcbd045";
     fsType = "btrfs";
     options = [ "subvol=work" "compress=zstd" "noatime" ];
     neededForBoot = true;
   };
+
+
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/BC0D-62EB";

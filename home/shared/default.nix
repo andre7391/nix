@@ -1,7 +1,7 @@
 { pkgs, ... }: {
 
   imports = [
-    #    ../../home/shared/google-chrome
+    ../../home/shared/theme
   ];
 
   # nix configs
@@ -24,6 +24,7 @@
     glib
     udiskie
     google-chrome
+    meld
   ];
 
 }
