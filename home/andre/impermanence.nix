@@ -14,12 +14,14 @@
       # vscode
       ".config/Code"
       ".vscode"
+
+      # qbittorrent
+      ".config/qBittorrent"
+      ".local/share/qBittorrent"
     ];
     files = [
-
       # bash history
       ".bash_history"
-
     ];
     allowOther = false;
   };

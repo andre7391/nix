@@ -1,0 +1,131 @@
+// colors
+$background: #1A1B26;
+$foreground: #A9B1D6;
+
+$black: #24283B;
+$gray: #565F89;
+$red: #F7768E;
+$green: #73DACA;
+$yellow: #E0AF68;
+$blue: #7AA2F7;
+$magenta: #BB9AF7;
+$cyan: #7DCFFF;
+$white: $foreground;
+
+// global
+* {
+  all: unset;
+}
+
+.button {
+  font-size: 22px;
+}
+
+.scale trough {
+  background-color: $white;
+  border-radius: 4px;
+  min-height: 10px;
+  min-width: 80px;
+}
+
+.scale highlight {
+  border-radius: 4px;
+}
+
+// bar
+.bar {
+  background-color: $background;
+  margin: 4px 4px 0px 4px;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+// clock 
+.clock {
+  font-weight: bold;
+  font-size: 16px;
+  color: $white;
+}
+
+// separator
+.separator {
+  font-weight: bold;
+  font-size: 22px;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: $white;
+}
+
+.invisible-separator {
+  padding-left: 6px;
+}
+
+// audio-output
+.audio-output-icon {
+  color: $green;
+}
+
+.audio-output-bar highlight {
+  background-color: $green;
+}
+
+// audio-input
+.audio-input-icon {
+  color: $blue;
+}
+
+.audio-input-bar highlight {
+  background-color: $blue;
+}
+
+// wifi
+.wifi-icon {
+  color: $magenta;
+}
+
+.wifi-name {
+  font-weight: bold;
+  font-size: 12px;
+  color: $white;
+}
+
+
+// workspaces
+.workspace {
+  color: $gray;
+  margin-left: 6px;
+}
+
+.workspace.focused {
+  color: $blue;
+}
+
+.workspace.urgent {
+  color: $red;
+}
+
+
+// power-menu
+.nix {
+  color: $cyan;
+  font-size: 28px;
+  font-weight: lighter;
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+
+.shutdown {
+  color: $red;
+}
+
+.lock {
+  color: $blue;
+}
+
+.logout {
+  color: $magenta;
+}
+
+.reboot {
+  color: $yellow;
+}

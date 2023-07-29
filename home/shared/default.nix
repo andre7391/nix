@@ -2,6 +2,11 @@
 
   imports = [
     ../../home/shared/theme
+    #../../home/shared/hyprland
+    ../../home/shared/sway
+    ../../home/shared/alacritty
+    ../../home/shared/eww
+    ../../home/shared/waybar
   ];
 
   # nix configs
@@ -24,7 +29,27 @@
     glib
     udiskie
     google-chrome
-    meld
+    htop
+    btop
+    transmission-gtk
+    killall
+
+
+    material-design-icons
+
+    vlc
+    eww-wayland
+    pavucontrol
+
+    pulseaudio
+
+    swww
+    jq
+
+    polkit_gnome
+
+
   ];
 
+  fonts.fontconfig.enable = true;
 }

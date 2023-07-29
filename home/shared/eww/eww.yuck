@@ -1,0 +1,426 @@
+
+;;############
+;;############
+;;############
+
+;; bar-window
+(defwindow bar-window
+  :monitor 0
+  :exclusive true
+  :geometry (geometry
+    :width "100%"
+    :anchor "center top"
+  )
+  (bar)
+)
+
+;; bar
+(defwidget bar []
+  (box
+    :class "bar"
+    (start)
+    (end)
+  )
+)
+
+
+
+;; end
+(defwidget end []
+  (box
+    :halign "end"
+    :space-evenly false
+    ;;(workspaces)
+    (control)
+    (separator)
+    (clock)
+    (invisible-separator)
+    ;;(power-menu)
+  )
+)
+
+
+
+;; separator
+(defwidget separator []
+  (label
+    :class "separator"
+    :text "󰇝"
+  )
+)
+
+
+
+;; invisible-separator
+(defwidget invisible-separator []
+  (label
+    :class "invisible-separator"
+    :text " "
+  )
+)
+
+
+
+;; clock
+(defwidget clock []
+  (eventbox
+    :onclick "scripts/popup calendar"
+    :cursor "pointer"
+    (box
+      :class "clock"
+      "${hour} : ${minute}"
+    )
+  )
+)
+(defpoll hour
+  :interval "1s"
+  "date '+%H'"
+)
+(defpoll minute
+  :interval "1s"
+  "date '+%M'"
+)
+
+;; control
+(defwidget control []
+  (box
+    :space-evenly false
+    :class "control"
+    (wifi)
+    (audio-input)
+    (audio-output)
+  )
+)
+
+
+
+;; wifi
+(defwidget wifi []
+  (eventbox
+    :onclick "scripts/popup wifi"
+    :onhover "eww update show-wifi-name=true"
+    :onhoverlost "eww update show-wifi-name=false"
+    :cursor "pointer"
+    (box
+      :space-evenly false
+      (button
+        :class "button wifi-icon"
+        wifi-icon
+      )
+      (revealer
+        :class "wifi-name"
+        :transition "slideright"
+        :reveal show-wifi-name
+        :duration "400ms"
+        (box
+          :space-evenly false
+          (invisible-separator)
+          wifi-name
+        )
+      )
+    )
+  )
+)
+(defvar show-wifi-name false)
+(defpoll wifi-icon
+  :interval "1s"
+  "scripts/wifi icon"
+)
+(defpoll wifi-name
+  :interval "1s"
+  "scripts/wifi name"
+)
+
+
+
+;; audio-input
+(defwidget audio-input []
+  (eventbox
+    :cursor "pointer"
+    :onhover "eww update show-audio-input=true"
+    :onhoverlost "eww update show-audio-input=false"
+    (box
+      :space-evenly "false"
+      (invisible-separator)
+      (button
+        :onclick "scripts/audio toggle_input_mute"
+        :class "button audio-input-icon"
+        "${audio-input-icon}"
+      )
+      (revealer
+        :transition "slideright"
+        :reveal show-audio-input
+        :duration "400ms"
+        (box
+          :space-evenly false
+          (invisible-separator)
+          (scale
+            :class "scale audio-input-bar"
+            :value audio-input-volume
+            :tooltip "Volume: ${audio-input-volume}%"
+            :max 101
+            :min 0
+            :onchange "scripts/audio set_input_volume {}"
+          )
+        )
+      )
+    )
+  )
+)
+(defvar show-audio-input false)
+(deflisten audio-input-volume
+  :initial 0
+  "scripts/audio subscribe_input_volume"
+)
+(deflisten audio-input-icon
+  "scripts/audio subscribe_input_icon"
+)
+
+
+
+;; audio-output
+(defwidget audio-output []
+  (eventbox
+    :cursor "pointer"
+    :onhover "eww update show-audio-output=true"
+    :onhoverlost "eww update show-audio-output=false"
+    (box
+      :space-evenly "false"
+      (invisible-separator)
+      (button
+        :onclick "scripts/audio toggle_output_mute"
+        :class "button audio-output-icon"
+        "${audio-output-icon}"
+      )
+      (revealer
+        :transition "slideright"
+        :reveal show-audio-output
+        :duration "400ms"
+        (box
+          :space-evenly false
+          (invisible-separator)
+          (scale
+            :class "scale audio-output-bar"
+            :value audio-output-volume
+            :tooltip "Volume: ${audio-output-volume}%"
+            :max 141
+            :min 0
+            :onchange "scripts/audio set_output_volume {}"
+          )
+        )
+      )
+    )
+  )
+)
+(defvar show-audio-output false)
+(deflisten audio-output-volume
+  :initial 0
+  "scripts/audio subscribe_output_volume"
+)
+(deflisten audio-output-icon
+  "scripts/audio subscribe_output_icon"
+)
+
+
+
+;; start
+(defwidget start []
+  (box
+    :halign "start"
+    :space-evenly false
+    (power-menu)
+    (separator)
+    (workspaces)
+  )
+)
+
+
+
+;; workspaces
+(defwidget workspaces []
+  (literal :content workspace))
+(deflisten workspace "scripts/workspace")
+
+
+
+
+
+;; power
+(defwidget power-menu []
+  (eventbox
+    :onhover "eww update show-power-menu=true"
+    :onhoverlost "eww update show-power-menu=false"
+    :cursor "pointer"
+    (box
+      :space-evenly "false"
+      :class "power-menu"
+      (invisible-separator)
+      (invisible-separator)
+      (button
+        :class "button nix"
+        ;;:onclick "shutdown now"
+        "󱄅"
+      )
+      (invisible-separator)
+      (revealer
+        :transition "slideright"
+        :reveal show-power-menu
+        :duration "400ms"
+        (box
+          :space-evenly "false"
+          (invisible-separator)
+          (button
+            :class "button shutdown"
+            :onclick "shutdown now"
+            "󰤆"
+          )
+          (invisible-separator)
+          (button
+            :class "button logout"
+            :onclick "sway exit"
+            "󰈆"
+          )
+          (invisible-separator)
+          (button
+            :class "button lock"
+            :onclick "betterlockscreen -l"
+            "󰍁"
+          )
+          (invisible-separator)
+          (button
+            :class "button reboot"
+            :onclick "reboot"
+            "󰑐"
+          )
+          (invisible-separator)
+        )
+      )
+      
+    )
+  )
+)
+(defvar show-power-menu false)
+
+
+
+
+
+
+
+
+
+
+;; Created   by https://github.com/rxyhn
+;; Designed  by https://github.com/rxyhn
+;; Maintaned by https://github.com/rxyhn
+
+(defvar eww "eww")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;							Widget Section's							 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Launcher Widgets ;;
+(defwidget launcher []
+  (box :orientation "v"
+    :space-evenly "false"
+    :spacing -15
+    (button :class "launcher_icon"
+    :onclick "scripts/popup launcher"  "")))
+
+
+
+;; Battery Widgets ;;
+(defwidget bat []
+  (box	:orientation "v"
+    :space-evenly "false"
+    (label	:class "bat"
+      :halign "end"
+      :text battery
+    :tooltip "Battery: ${battery-cappacity}%")))
+(defpoll battery			:interval "1s"	"scripts/battery icon")
+(defpoll battery-cappacity	:interval "1s"	"scripts/battery percent")
+
+
+
+;; Brightness Widgets ;;
+(defwidget bright []
+  (eventbox :onhover "${eww} update bright=true"
+    :onhoverlost "${eww} update bright=false"
+    (box    :orientation "v"
+      :space-evenly "false"
+      :spacing 2
+      (revealer :transition "slideup"
+        :reveal bright
+        :duration "550ms"
+        (scale :class "bribar"
+          :value current-brightness
+          :tooltip "Brightness: ${current-brightness}%"
+          :onchange "brightnessctl set {}%"
+          :orientation "v"
+          :flipped true
+          :max 101
+        :min 0))
+      (label :class "brightness-icon"
+      :text ""))))
+(defpoll current-brightness :interval "1s" "brightnessctl -m -d amdgpu_bl0 | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+(defvar bright false)
+
+
+
+
+
+
+(defpoll calendar_day :interval "10h" "date '+%d'")
+(defpoll calendar_month :interval "10h" "scripts/calendar")
+(defpoll calendar_year :interval "10h" "date '+%Y'")
+;; Calendar Widgets ;;
+(defwidget cal []
+  (box :class "cal-box"
+    :orientation "v"
+    (box :class "cal-inner-box"
+      (calendar :class "cal"
+      ))))
+
+
+
+;; Top Widgets ;;
+(defwidget top []
+  (box	:orientation "v"
+    :space-evenly "false"
+    :valign "start"
+    (launcher)
+    (workspaces)))
+
+
+
+;; End Widgets ;;
+(defwidget eaand []
+  (box :orientation "v"
+    :space-evenly "false"
+    :valign "end"
+    :spacing 5
+    (bottom)))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;							Window Section's							 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Bar Windows ;;
+
+
+;; Calendar Windows ;;
+(defwindow calendar
+  :monitor 1
+  :geometry (geometry :x "70px"
+    :y "65%"
+    :width "270px"
+  :height "60px")
+  :reveal false
+  
+  (cal))
+
+
+
+
+

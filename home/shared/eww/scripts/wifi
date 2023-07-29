@@ -1,0 +1,16 @@
+#!/bin/sh
+
+name() {
+    nmcli | grep "^wlp" | awk 'sub(/.*connected to /,"") {print $1}'
+}
+
+icon() {
+    status=$(cat /sys/class/net/w*/operstate)
+    if  [ $status == "up" ] ; then  
+        echo "󰖩"
+    else 
+        echo "󰖪"
+    fi
+}
+
+"$@"

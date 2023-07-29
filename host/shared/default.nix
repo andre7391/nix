@@ -24,27 +24,12 @@
     mountOnMedia = true;
   };
 
-  # gretter
-  services.xserver = {
-    enable = true;
-
-    displayManager = {
-      gdm = {
-        enable = true;
-        wayland = true;
-      };
-    };
-  };
 
   # window manager
-  programs.hyprland = {
+  programs.sway = {
     enable = true;
-    xwayland = {
-      enable = true;
-    };
   };
 
-  # screen share on wayland
-  xdg.portal.wlr.enable = true;
+  security.polkit.enable = true;
 
 }

@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# checks if a list ($1) contains an element ($2)
+contains() {
+    for e in $1; do
+        [ "$e" == "$2" ] && echo 1 && return 
+    done
+    echo 0
+}
+
+# print sway workspaces
+print_workspaces() {
+    output=""
+
+    sway_data=$(swaymsg -t get_workspaces)
+
+    workspaces=$(echo $sway_data | jq '.[] | .num')
+    focused_workspaces=$(echo $sway_data | jq '.[] | select(.focused==true) | .num')
+    urgent_workspaces=$(echo $sway_data | jq '.[] | select(.urgent==true) | .num')
+    
+    for w in $workspaces; do
+        if [ "$(contains "$focused_workspaces" "$w")" -eq 1 ]; then
+            ws=$w
+            icon="󰺕"
+            class="button workspace focused"   
+        elif [ "$(contains "$urgent_workspaces" "$w")" -eq 1 ]; then
+            ws=$w
+            icon="󰝦"
+            class="button workspace urgent"
+        else 
+            ws=$w
+            icon="󰝦"
+            class="button workspace"
+        fi  
+
+        output="$output (eventbox :cursor \"hand\" :onclick \"swaymsg workspace number $ws\" (label :class \"$class\" :text \"$icon\"))"
+    done
+
+    echo "(box :class \"workspaces\" $output)"
+}
+
+# Listen to bspwm changes
+print_workspaces
+
+while true ; do
+    swaymsg -t subscribe '[ "workspace" ]' | while read -r _ ; do
+        print_workspaces
+    done 
+done
