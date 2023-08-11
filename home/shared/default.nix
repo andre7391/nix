@@ -1,19 +1,31 @@
-{ pkgs, ... }: {
+{ pkgs, outputs, ... }: {
 
   imports = [
     ../../home/shared/theme
-    #../../home/shared/hyprland
+    ../../home/shared/hyprland
     ../../home/shared/sway
+    ../../home/shared/i3
+    ../../home/shared/polybar
     ../../home/shared/alacritty
     ../../home/shared/eww
     ../../home/shared/waybar
+    ../../home/shared/python
   ];
 
-  # nix configs
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
+
+  nixpkgs = {
+    overlays = [
+      outputs.overlays.modifications
+    ];
+
+    # nix configs
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = _: true;
+    };
   };
+
+
 
   # programs
   home.packages = with pkgs;  [
@@ -32,13 +44,13 @@
     htop
     btop
     transmission-gtk
-    killall
 
 
     material-design-icons
+    font-awesome
+    jetbrains-mono
 
     vlc
-    eww-wayland
     pavucontrol
 
     pulseaudio
@@ -46,10 +58,20 @@
     swww
     jq
 
-    polkit_gnome
+    lxde.lxsession
 
+    inotify-tools
 
+    bspwm
+    sysstat
+    # busybox
+    lm_sensors
+    nload
+    # 7zip
+    p7zip
   ];
+
+  #programs.dconf.enable = true;
 
   fonts.fontconfig.enable = true;
 }

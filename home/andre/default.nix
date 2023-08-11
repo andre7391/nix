@@ -1,18 +1,14 @@
 { inputs, pkgs, ... }: {
   imports = [
-    #   inputs.hyprland.homeManagerModules.default
-
     ./impermanence.nix
 
     ../../home/shared
-
   ];
 
   # home manager
   programs = {
     home-manager.enable = true;
   };
-
 
   # user and home
   home = {

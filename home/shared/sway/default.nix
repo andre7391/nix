@@ -24,6 +24,11 @@
 
     # terminal
     alacritty
+
+    # xwayland
+
   ];
+
+
 
 }

@@ -1,49 +1,44 @@
 #!/bin/sh
 
-# checks if a list ($1) contains an element ($2)
-contains() {
-    for e in $1; do
-        [ "$e" == "$2" ] && echo 1 && return 
-    done
-    echo 0
-}
-
-# print sway workspaces
+# print workspaces
 print_workspaces() {
-    output=""
 
-    sway_data=$(swaymsg -t get_workspaces)
+    i3-msg -t get_workspaces | sed -E 's/\},\s*\{/\},\n\{/g' | ( 
+        while read workspace ; do
+        
+            name=$(echo $workspace | cut -d ':' -f 3 | cut -d ',' -f 1)
+            
+            if [[ "$workspace" == *"focused\":true"* ]] then
+                class="workspace focused"   
+            elif [[ "$workspace" == *"urgent\":true"* ]] then
+                class="workspace urgent"
+            else 
+                class="workspace"
+            fi
 
-    workspaces=$(echo $sway_data | jq '.[] | .num')
-    focused_workspaces=$(echo $sway_data | jq '.[] | select(.focused==true) | .num')
-    urgent_workspaces=$(echo $sway_data | jq '.[] | select(.urgent==true) | .num')
-    
-    for w in $workspaces; do
-        if [ "$(contains "$focused_workspaces" "$w")" -eq 1 ]; then
-            ws=$w
-            icon="󰺕"
-            class="button workspace focused"   
-        elif [ "$(contains "$urgent_workspaces" "$w")" -eq 1 ]; then
-            ws=$w
-            icon="󰝦"
-            class="button workspace urgent"
-        else 
-            ws=$w
-            icon="󰝦"
-            class="button workspace"
-        fi  
+            if [[ "$workspace" == *"["* ]] then
+                class="$class round-left square-right"
+            elif [[ "$workspace" == *"]"* ]] then
+                class="$class square-left round-right"
+            else 
+                class="$class square"
+            fi
 
-        output="$output (eventbox :cursor \"hand\" :onclick \"swaymsg workspace number $ws\" (label :class \"$class\" :text \"$icon\"))"
-    done
+            output="$output (eventbox :cursor \"hand\" :onclick \"i3-msg workspace number $name\" (label :class \"$class\" :text \"$name\"))"
+        done
 
-    echo "(box :class \"workspaces\" $output)"
+        echo "(box :space-evenly false :class \"workspaces\" $output)"
+    )
+
+ 
+
 }
 
 # Listen to bspwm changes
 print_workspaces
 
 while true ; do
-    swaymsg -t subscribe '[ "workspace" ]' | while read -r _ ; do
+    i3-msg -t subscribe '[ "workspace" ]' | while read -r _ ; do
         print_workspaces
     done 
 done

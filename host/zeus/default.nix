@@ -31,7 +31,12 @@
   boot.supportedFilesystems = [ "ntfs" ];
 
   #kernel
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.blacklistedKernelModules = [ "k10temp" ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.extraModulePackages = with config.boot.kernelPackages; [ zenpower ];
 
   # network
   networking.hostName = "zeus";
@@ -80,7 +85,21 @@
     };
   };
 
+
+
+  # xdg.portal = {
+  #   enable = true;
+  #   wlr.enable = true;
+  #   # gtk portal needed to make gtk apps happy
+  #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  # };
+
+  # # enable sway window manager
+  # programs.sway = {
+  #   enable = true;
+  #   wrapperFeatures.gtk = true;
+  # };
+
   # install version
   system.stateVersion = "23.05";
-
 }

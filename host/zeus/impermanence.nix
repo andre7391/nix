@@ -22,7 +22,7 @@
 
   # erase root on boot
   boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
-        
+
     # mount device
     mkdir -p /mnt
     mount -o subvol=/ /dev/sda2 /mnt

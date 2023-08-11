@@ -20,7 +20,11 @@
       inherit (self) outputs;
       lib = nixpkgs.lib // home-manager.lib;
     in
-    {
+    rec {
+
+      # overlays
+      overlays = import ./overlays { inherit inputs; };
+
       # hosts configurations
       nixosConfigurations = {
         zeus = lib.nixosSystem {
